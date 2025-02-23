@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="http://127.0.0.1:5000/form" method="post" id="form">
+        <input type="text" placeholder="Name" name="name" required>
+        <input type="number" placeholder="Age" name="age" required>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        document.getElementById("form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default browser redirect
+
+            let formData = new FormData(this); // Collect form data
+
+            fetch(this.action, {
+                method: this.method,
+                body: formData,
+            })
+            .then(response => response.json()) // Handle JSON response
+            .then(data => {
+                console.log("Success:", data);
+                window.location.reload(); // Reload the page after successful submission
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
